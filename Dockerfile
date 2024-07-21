@@ -11,4 +11,4 @@ COPY target/service-1.0.0.jar url-shorten-service.jar
 EXPOSE 8092
 
 # Set the entry point for the Docker container
-ENTRYPOINT ["java", "-jar", "url-shorten.jar"]
+ENTRYPOINT ["java", "-jar", "url-shorten-service.jar"]
