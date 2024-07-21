@@ -25,7 +25,7 @@ public class URLService {
 
         validateUrl(longUrl);
 
-        longUrl = removeWWWandTrailingSlash(longUrl);
+        longUrl = removeHTTPWWWandTrailingSlash(longUrl);
         Optional<Url> existingUrl = urlRepository.findByLongUrl(longUrl);
         if (existingUrl.isPresent()) {
             return existingUrl.get().getShortUrl();
@@ -55,9 +55,10 @@ public class URLService {
         }
     }
 
-    private String removeWWWandTrailingSlash(String longUrl) {
-        String longUrlWithoutWww = longUrl.replaceFirst("www\\.", "");
-        return longUrlWithoutWww.endsWith("/") ? longUrlWithoutWww.substring(0, longUrlWithoutWww.length() - 1) : longUrlWithoutWww;
+    private String removeHTTPWWWandTrailingSlash(String longUrl) {
+        String longUrlReplaceHTTPSAndWWW = longUrl.replaceFirst("http://", "https://")
+                .replaceFirst("www\\.", "");
+        return longUrlReplaceHTTPSAndWWW.endsWith("/") ? longUrlReplaceHTTPSAndWWW.substring(0, longUrlReplaceHTTPSAndWWW.length() - 1) : longUrlReplaceHTTPSAndWWW;
     }
 
     private String buildShortURL(String longUrl) {
